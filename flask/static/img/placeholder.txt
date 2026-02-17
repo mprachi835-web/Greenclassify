@@ -1,3 +1,7 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:46cb829cd0facecf815bab7e3d212b13ba2587cd4160cef1e3a89c567999da0f
-size 301
+<!-- Placeholder for vegetables banner image -->
+<!-- Replace this with an actual vegetable banner image -->
+<!-- Suggested size: 1200x400 pixels -->
+<!-- You can download free vegetable images from:
+     - https://unsplash.com/s/photos/vegetables
+     - https://www.pexels.com/search/vegetables/
+-->
