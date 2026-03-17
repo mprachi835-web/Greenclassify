@@ -40,8 +40,9 @@ def res():
             return render_template('prediction.html', pred="Model not loaded! Please train the model first.")
         
         f = request.files['image']
-        basepath = os.path.dirname(__file__)  # Getting the current path i.e where app.py is present
-        filepath = os.path.join(basepath, 'uploads', f.filename)  # Store anywhere in the system we can give image but we want that in uploads folder
+        # basepath = os.path.dirname(__file__)  # Getting the current path i.e where app.py is present
+        # filepath = os.path.join(basepath, 'uploads', f.filename)  # Store anywhere in the system we can give image but we want that in uploads folder
+        filepath = os.path.join('/tmp', f.filename) # Vercel allows writing only to /tmp directory
         f.save(filepath)
         
         # Reading Image - resize to (224, 224) to match model input
