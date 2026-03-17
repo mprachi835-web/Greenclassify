@@ -1,20 +1,27 @@
 import numpy as np
 import os
 from flask import Flask, request, render_template
-from keras.models import load_model
-from keras.utils import load_img, img_to_array
+try:
+    from keras.models import load_model
+    from keras.utils import load_img, img_to_array
+    keras_available = True
+except ImportError:
+    keras_available = False
 
 app = Flask(__name__)
 
 # Loading the model
 model = None
 model_path = os.path.join(os.path.dirname(__file__), "vegetable_classification.h5")
-if os.path.exists(model_path):
+if keras_available and os.path.exists(model_path):
     model = load_model(model_path, compile=False)
     print("Model loaded successfully!")
 else:
-    print(f"Warning: Model file not found at {model_path}")
-    print("Please train the model using the Jupyter notebook first.")
+    if not keras_available:
+        print("Warning: Keras/TensorFlow is not installed. Model cannot be loaded.")
+    else:
+        print(f"Warning: Model file not found at {model_path}")
+        print("Please train the model using the Jupyter notebook first.")
 
 # Default home page or route
 @app.route('/')
@@ -36,6 +43,9 @@ def logout():
 @app.route('/result', methods=["GET", "POST"])
 def res():
     if request.method == "POST":
+        if not keras_available:
+            return render_template('prediction.html', pred="Demo Mode: Full model too large for Vercel Free Tier.")
+            
         if model is None:
             return render_template('prediction.html', pred="Model not loaded! Please train the model first.")
         
